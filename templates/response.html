@@ -1,0 +1,28 @@
+
+{% if numrows == 1 %}
+<h3>{{numrows}} Record Found</h3>
+{% else %}
+<h3>{{numrows}} Records Found</h3>
+{% endif %}
+
+
+<table class="table">
+     <thead>
+      <tr>
+         <th>Airport Iata Code</th>
+         <th>Airport Name</th>
+         <th>Location City</th>
+      </tr>
+  </thead>
+  <tbody>
+  {% for row in airports %}
+   <tr>
+    <td>{{row.iata}}</td>
+    <td>{{row.airport_name}}</td>
+    <td>{{row.location_served_city}}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+

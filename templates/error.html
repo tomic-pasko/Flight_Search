@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Flights Table{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<head>
+    <style>
+        body{
+        background-image:url({{ url_for('static', filename='img/sea.jpg') }})
+        }
+    </style>
+</head>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% if 'errors' in flights.keys() %}
+            <h1>{{ flights['errors'][0]['title'] }}</h1>
+            <h4>{{ flights['errors'][0]['detail'] }}</h4>
+
+            {% else %}
+            <h1>No Flights</h1>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

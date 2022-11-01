@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Flights Table{% endblock %}
+
+{% block content %}
+{{ super() }}
+<head>
+    <style>
+        body{
+        background-image:url({{ url_for('static', filename='img/sea.jpg') }})
+        }
+    </style>
+</head>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h1>All Flights</h1>
+            <table class="table">
+
+                <thead>
+                <!-- Table column names -->
+                <th scope='col'>Flight Number</th>
+                <th scope="col">origin Airport</th>
+                <th scope="col">destination Airport</th>
+                <th scope="col">departure Date</th>
+                <th scope="col">return Date</th>
+                <th scope="col">Stops >>></th>
+                <th scope="col">Stops <<<</th>
+                <th scope="col">Number of passengers</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Total price</th>
+
+                </thead>
+
+                <tbody>
+                <!-- Add each flight as table row -->
+                {% for flight in flights %}
+                <tr>
+                    <td>{{ flight['flightNumber'] }}</td>
+                    <td>{{ flight['originAirport'] }}</td>
+                    <td>{{ flight['destAirport'] }}</td>
+                    <td>{{ flight['departureD'] }}</td>
+
+                    {% if flight['returnD'] == None %}
+                    <td>N/A</td>
+                    {% else %}
+                    <td>{{ flight['returnD'] }}</td>
+                    {% endif %}
+
+                    <td>{{ flight['departureSegments'] - 1 }}</td>
+
+                    {% if flight["returnSegments"] == None %}
+                    <!--<td>{{ flight['returnSegments'] }}</td>-->
+                    <td>N/A</td>
+                    {% else %}
+                    <td>{{ flight['returnSegments'] - 1 }}</td>
+                    {% endif %}
+
+                    <td>{{ flight['num_adults'] }}</td>
+                    <td>{{ flight['currency'] }}</td>
+                    <td>{{ flight['total_price'] }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+
+            <h3>Flight Segment Distance (Departure)</h3>
+            <table class="table">
+
+                <thead>
+                <!-- Table column names -->
+                <th scope="col">Flight Number</th>
+                <th scope="col">Flight Segment</th>
+                <th scope="col">Great Circle Distance [km]</th>
+                </thead>
+
+                <tbody>
+                <!-- Add each flight as table row -->
+                {% for distance in distances %}
+                <tr>
+                    <td>{{ distance['Flight_number'] }}</td>
+                    <td>{{ distance['Start'] }} - {{distance['Stop']}}</td>
+                    <td>{{ distance['Distance'] }}</td>
+
+                </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

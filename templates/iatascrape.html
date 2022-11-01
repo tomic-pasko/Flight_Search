@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Iata scrape{% endblock %}
+
+
+{% block content %}
+{{ super() }}
+
+<head>
+    <style>
+        body{
+        background-image:url({{ url_for('static', filename='img/sea.jpg') }})
+        }
+    </style>
+</head>
+
+<p>...transfer of scraped iata codes to db finished</p>
+<p>...press HOME button to search for flight</p>
+
+{% endblock %}

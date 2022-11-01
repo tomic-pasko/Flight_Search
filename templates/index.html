@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Flight Search{% endblock %}
+
+
+{% block content %}
+{{ super() }}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        body{
+        background-image:url({{ url_for('static', filename='img/plane_wing.jpg') }});
+        color: #353535;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function(){
+            load_data();
+            function load_data(query)
+            {
+            $.ajax({
+                url:"/ajaxlivesearch",
+                method:"POST",
+                data:{query:query},
+                success:function(data)
+                {
+                    $('#result').html(data);
+                    $('#result').append(data.htmlresponse);
+                }
+            });
+            }
+            $('#search_text').keyup(function(){
+                var search = $(this).val();
+                if(search != ''){
+                load_data(search);
+                }else{
+                load_data();
+                }
+                });
+        });
+
+    </script>
+</head>
+
+<div class="container search-tables">
+    <div class="row">
+        <div class="col-sm-6 col-md-8">
+            <h1>Search Flight</h1>
+            <!-- Flight booking WTForm -->
+            {{ wtf.quick_form(form, novalidate=True, extra_classes="col-lg-6 col-md-6 col-sm-6 col-6") }}
+        </div>
+        <div class="col-sm-6 col-md-4 search-iata">
+            <label>Search Airport IATA code by city name</label>
+            <input type="text" name="search_text" id="search_text" class="form-control"
+                   placeholder="Search field e.g. London">
+            <div id="result"></div>
+        </div>
+
+    </div>
+
+
+</div>
+<style>
+    .search-tables{
+      padding: 5%;
+    }
+    .search-iata{
+      padding: 2%;
+    }
+</style>
+
+{% endblock %}
